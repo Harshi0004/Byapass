@@ -18,22 +18,14 @@ from FZBypass.core.bot_utils import AuthChatsTopics, convert_time, BypassFilter
 @Bypass.on_message(command("start"))
 async def start_msg(client, message):
     await message.reply(
-        f"""<b><i>FZ Bypass Bot!</i></b>
-    
-    <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
-    
-    <i><b>Bot Started {convert_time(time() - BOT_START)} ago...</b></i>
-
-🛃 <b>Use Me Here :</b> @CyberPunkGrp <i>(Bypass Topic)</i>""",
+       f"<b><i>CS Bypass Bot!</i></b>\n\n"
+        f"<b>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ...</b>\n\n"
+        f"<b>Bot Started {convert_time(time() - BOT_START)} ago...</b>",
         quote=True,
         reply_markup=InlineKeyboardMarkup(
-            [
+            inline_keyboard=[
                 [
-                    InlineKeyboardButton("🎓 Dev", url="https://t.me/SilentDemonSD"),
-                    InlineKeyboardButton(
-                        "🔍 Deploy Own",
-                        url="https://github.com/SilentDemonSD/FZBypassBot",
-                    ),
+                    InlineKeyboardButton("🎓 Dev", url="https://t.me/CSAdmin69_bot"),
                 ]
             ]
         ),
@@ -73,47 +65,25 @@ async def bypass_check(client, message):
 
     completed_tasks = await gather(*atasks, return_exceptions=True)
 
-    parse_data = []
+    parse_data = ""
     for result, link in zip(completed_tasks, tlinks):
+        parse_data += f"━━━━━━━✦✗✦━━━━━━━\n\n"
+        parse_data += f"» sᴏᴜʀᴄᴇ ʟɪɴᴋ : {link}\n"
         if isinstance(result, Exception):
-            bp_link = f"\n┖ <b>Bypass Error:</b> {result}"
-        elif is_excep_link(link):
-            bp_link = result
-        elif isinstance(result, list):
-            bp_link, ui = "", "┖"
-            for ind, lplink in reversed(list(enumerate(result, start=1))):
-                bp_link = f"\n{ui} <b>{ind}x Bypass Link:</b> {lplink}" + bp_link
-                ui = "┠"
+            parse_data += f"» ʙʏᴘᴀss ᴇʀʀᴏʀ : {result}\n"
         else:
-            bp_link = f"\n┖ <b>Bypass Link:</b> {result}"
-
-        if is_excep_link(link):
-            parse_data.append(f"{bp_link}\n\n━━━━━━━✦✗✦━━━━━━━\n\n")
-        else:
-            parse_data.append(
-                f"┎ <b>Source Link:</b> {link}{bp_link}\n\n━━━━━━━✦✗✦━━━━━━━\n\n"
-            )
+            parse_data += f"» ʙʏᴘᴀssᴇᴅ ʟɪɴᴋ : {result}\n"
 
     end = time()
 
-    if len(parse_data) != 0:
-        parse_data[-1] = (
-            parse_data[-1]
-            + f"┎ <b>Total Links : {no}</b>\n┠ <b>Results In <code>{convert_time(end - start)}</code></b> !\n┖ <b>By </b>{message.from_user.mention} ( #ID{message.from_user.id} )"
-        )
-    tg_txt = "━━━━━━━✦✗✦━━━━━━━\n\n"
-    for tg_data in parse_data:
-        tg_txt += tg_data
-        if len(tg_txt) > 4000:
-            await wait_msg.edit(tg_txt, disable_web_page_preview=True)
-            wait_msg = await message.reply(
-                "<i>Fetching...</i>", reply_to_message_id=wait_msg.id
-            )
-            tg_txt = ""
-            await asleep(2.5)
+    if parse_data:
+        parse_data += f"━━━━━━━✦✗✦━━━━━━━\n\n"
+        parse_data += f"🫅 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {message.from_user.username}\n"
+        parse_data += f"✨ ɪᴅ : {uid}\n"
+        parse_data += f"♻️ ᴛᴏᴛᴀʟ ʟɪɴᴋs : {no}\n"
+        parse_data += f"⚡️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : CS (https://t.me/CSAdmin69_bot)\n"
 
-    if tg_txt != "":
-        await wait_msg.edit(tg_txt, disable_web_page_preview=True)
+        await wait_msg.edit(parse_data, disable_web_page_preview=True)
     else:
         await wait_msg.delete()
 
