@@ -18,7 +18,7 @@ from FZBypass.core.bot_utils import AuthChatsTopics, convert_time, BypassFilter
 @Bypass.on_message(command("start"))
 async def start_msg(client, message):
     await message.reply(
-       f"<b><i>CS Bypass Bot!</i></b>\n\n"
+        f"<b><i>CS Bypass Bot!</i></b>\n\n"
         f"<b>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ...</b>\n\n"
         f"<b>Bot Started {convert_time(time() - BOT_START)} ago...</b>",
         quote=True,
@@ -154,26 +154,26 @@ async def inline_query(client, query):
             )
 
     else:
-       answers.append(
-    InlineQueryResultArticle(
-        title="♻️ Bypass Usage: In Line",
-        input_message_content=InputTextMessageContent(
-            f"<b><i>CS Bypass Bot!</i></b>\n\n"
-            f"<b>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ...</b>\n\n"
-            f"<b>Bot Started {convert_time(time() - BOT_START)} ago...</b>",
-            quote=True
-        ),
-        reply_markup=InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton("🎓 Dev", url="https://t.me/CSAdmin69_bot"),
-                ]
-            ]
+        answers.append(
+            InlineQueryResultArticle(
+                title="♻️ Bypass Usage: In Line",
+                input_message_content=InputTextMessageContent(
+                    f"<b><i>CS Bypass Bot!</i></b>\n\n"
+                    f"<b>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ...</b>\n\n"
+                    f"<b>Bot Started {convert_time(time() - BOT_START)} ago...</b>",
+                    quote=True
+                ),
+                reply_markup=InlineKeyboardMarkup(
+                    inline_keyboard=[
+                        [
+                            InlineKeyboardButton("🎓 Dev", url="https://t.me/CSAdmin69_bot"),
+                        ]
+                    ]
+                )
+            )
         )
-    )
-)
 
-try:
-    await query.answer(results=answers, cache_time=0)
-except QueryIdInvalid:
-    pass
+    try:
+        await query.answer(results=answers, cache_time=0)
+    except QueryIdInvalid:
+        pass
