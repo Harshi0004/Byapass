@@ -232,28 +232,23 @@ async def transcript(url: str, DOMAIN: str, ref: str, sltime) -> str:
                   except Exception:
                       raise DDLException("Link Extraction Failed")
 
-async def shareus(url: str) -> str:
-    """
-    Restricted Use !
-    """
-    DOMAIN = f"https://api.shrslink.xyz"
+async def shareus(url):
     code = url.split('/')[-1]
-    headers = {
-        'User-Agent':'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
-        'Origin':'https://shareus.io',
-    }
+    DOMAIN = "https://api.shrslink.xyz"
+    headers = {'User-Agent':'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36', 'Origin':'https://shareus.io'}
     api = f"{DOMAIN}/v?shortid={code}&initial=true&referrer="
-    id = rget(api, headers=headers).json()['sid']
-    if id:
-        api_2 = f"{DOMAIN}/get_link?sid={id}"
-        res = rget(api_2, headers=headers)
-        if res:
-            return res.json()['link_info']['destination']
-        else:
-            raise DDLException("Link Extraction Failed")
-    else:
-        raise DDLException("ID Error")     
-
+    async with ClientSession() as session:
+        async with session.get(api, headers=headers) as resp:
+            data = await resp.json()
+            id = data.get('sid')
+            if not id:
+                return "ID Error"
+            else:
+                api_2 = f"{DOMAIN}/get_link?sid={id}"
+                async with session.get(api_2, headers=headers) as resp_2:
+                    data_2 = await resp_2.json()
+                    final = data_2['link_info']['destination']
+                    return final
 
 async def dropbox(url: str) -> str:
     return (
