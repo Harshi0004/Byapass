@@ -44,7 +44,7 @@ async def bypass_check(client, message):
         txt = message.text
         entities = message.entities
     else:
-        return await message.reply("<i>No Link Provided!</i>")
+        return await message.reply("<i>Link Evu raa pukesh...!</i>")
 
     wait_msg = await message.reply("<i>Bypassing...</i>")
     start = time()
@@ -158,27 +158,18 @@ async def inline_query(client, query):
             InlineQueryResultArticle(
                 title="♻️ Bypass Usage: In Line",
                 input_message_content=InputTextMessageContent(
-                    """<b><i>FZ Bypass Bot!</i></b>
-    
-    <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
-    
-🎛 <b>Inline Use :</b> !bp [Single Link]""",
-                ),
-                description="Bypass via !bp [link]",
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "FZ Channel", url="https://t.me/FXTorrentz"
-                            ),
-                            InlineKeyboardButton(
-                                "Try Bypass", switch_inline_query_current_chat="!bp "
-                            ),
-                        ]
-                    ]
-                ),
-            )
-        )
+        f"<b><i>CS Bypass Bot!</i></b>\n\n"
+        f"<b>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ...</b>\n\n"
+        f"<b>Bot Started {convert_time(time() - BOT_START)} ago...</b>",
+        quote=True,
+        reply_markup=InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton("🎓 Dev", url="https://t.me/CSAdmin69_bot"),
+                ]
+            ]
+        ),
+    )
     try:
         await query.answer(results=answers, cache_time=0)
     except QueryIdInvalid:
