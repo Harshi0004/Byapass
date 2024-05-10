@@ -81,7 +81,7 @@ async def bypass_check(client, message):
         parse_data += f"🫅 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {message.from_user.username}\n"
         parse_data += f"✨ ɪᴅ : {uid}\n"
         parse_data += f"♻️ ᴛᴏᴛᴀʟ ʟɪɴᴋs : {no}\n"
-        parse_data += f"⚡️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : CS (https://t.me/CSAdmin69_bot)\n"
+        parse_data += f"⚡️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : <a href='https://t.me/CSAdmin69_bot'>CS</a>\n"
 
         await wait_msg.edit(parse_data, disable_web_page_preview=True)
     else:
