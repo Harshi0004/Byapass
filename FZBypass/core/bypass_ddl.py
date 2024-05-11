@@ -248,7 +248,6 @@ def shrs(link):
     return r
 
 def shareus(link):
-  
     if "shareus" in link:
         bypassed_link = main(link)
     elif "shrs" in link:
@@ -258,7 +257,7 @@ def shareus(link):
 
     print(bypassed_link)
     
-     return bypassed_link
+    return bypassed_link
 
 async def dropbox(url: str) -> str:
     return (
