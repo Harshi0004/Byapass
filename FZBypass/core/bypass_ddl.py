@@ -242,15 +242,15 @@ async def shareus(link):
             r = await response.text()
             return r
 
-async def shrs(link):
+def shrs(link):
     r = link.replace("https://shrs.link/", "")
-    async with aiohttp.ClientSession() as session:
-        async with session.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=") as response:
-            data = await response.json()
-            r = await session.get("https://api.shrslink.xyz/get_link?sid="+data['sid'])
-            data = await r.json()
-            r = data['link_info']['destination']
-            return r
+    with aiohttp.ClientSession() as session:
+        response = session.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=")
+        data = response.json()
+        r = session.get("https://api.shrslink.xyz/get_link?sid="+data['sid'])
+        data = r.json()
+        r = data['link_info']['destination']
+        return r
 
 
 async def main(link):
@@ -268,9 +268,7 @@ async def main(link):
 if __name__ == "__main__":
     link = input("Enter The Shareus Link :")
     asyncio.run(main(link))
-
-
-    
+   
 async def dropbox(url: str) -> str:
     return (
         url.replace("www.", "")
