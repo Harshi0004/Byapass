@@ -289,7 +289,7 @@ async def dropbox(url: str) -> str:
         .replace("?dl=0", "")
     )
 
-async def shareus(url):
+async def shrs(link):
     code = url.split('/')[-1]
     DOMAIN = "https://api.shrslink.xyz"
     headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36', 'Origin': 'https://shareus.io'}
