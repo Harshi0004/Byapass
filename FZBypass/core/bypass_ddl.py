@@ -235,38 +235,18 @@ async def transcript(url: str, DOMAIN: str, ref: str, sltime) -> str:
                       raise DDLException("Link Extraction Failed")
 
 async def shareus(link):
-    r = link.split("=")[-1]
-    bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
     async with aiohttp.ClientSession() as session:
+        r = link.split("=")[-1]
+        bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
         async with session.get(bplink) as response:
-            r = await response.text()
-            return r
+            return await response.text()
 
-   def shrs(link):
+def shrs(link):
     r = link.replace("https://shrs.link/","")
-    response = requests.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=").json()
-    if response.get('sid'):
-        sid = response['sid']
-        response = requests.get("https://api.shrslink.xyz/get_link?sid="+sid).json()
-        if response.get('link_info') and response['link_info'].get('destination'):
-            return response['link_info']['destination']
-    return "Failed to bypass link"
-
-
-def main():
-    link = input("Enter The Shareus Link :")
-
-    if "shareus" in link:
-        bypassed_link = shareus(link)
-    elif "shrs" in link:
-        bypassed_link = shrs(link)
-    else:
-        bypassed_link = "Enter a valid Shareus Link"
-
-    print("Bypassed Link:", bypassed_link)
-
-if __name__ == "__main__":
-    main()
+    r = requests.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=").json()
+    r = requests.get("https://api.shrslink.xyz/get_link?sid="+r['sid']).json()
+    r = (r['link_info']['destination'])
+    return r
 
 def main():
     link = input("Enter The Shareus Link :")
