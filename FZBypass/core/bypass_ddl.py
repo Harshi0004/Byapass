@@ -234,7 +234,7 @@ async def transcript(url: str, DOMAIN: str, ref: str, sltime) -> str:
                   except Exception:
                       raise DDLException("Link Extraction Failed")
 
-async def shareus(link):
+def main(link):
     async with aiohttp.ClientSession() as session:
         r = link.split("=")[-1]
         bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
@@ -248,21 +248,19 @@ def shrs(link):
     r = (r['link_info']['destination'])
     return r
 
-def main():
-    link = input("Enter The Shareus Link :")
-
+def shareus(link):
+  
     if "shareus" in link:
-        bypassed_link = shareus(link)
+        bypassed_link = main(link)
     elif "shrs" in link:
         bypassed_link = shrs(link)
     else:
         bypassed_link = "Enter a valid Shareus Link"
 
     print(bypassed_link)
+    
+     return bypassed_link
 
-if __name__ == "__main__":
-    main()
-   
 async def dropbox(url: str) -> str:
     return (
         url.replace("www.", "")
