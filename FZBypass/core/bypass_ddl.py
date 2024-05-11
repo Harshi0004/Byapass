@@ -233,23 +233,40 @@ async def transcript(url: str, DOMAIN: str, ref: str, sltime) -> str:
                   except Exception:
                       raise DDLException("Link Extraction Failed")
 
-async def shareus(url):
-    code = url.split('/')[-1]
-    DOMAIN = "https://api.shrslink.xyz"
-    headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36', 'Origin': 'https://shareus.io'}
-    api = f"{DOMAIN}/v?shortid={code}&initial=true&referrer="
+async def shareus(link):
+    r = link.split("=")[-1]
+    bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
     async with aiohttp.ClientSession() as session:
-        async with session.get(api, headers=headers) as resp:
-            data = await resp.json()
-            id = data.get('sid')
-            if not id:
-                return "ID Error"
-            else:
-                api_2 = f"{DOMAIN}/get_link?sid={id}"
-                async with session.get(api_2, headers=headers) as resp_2:
-                    data_2 = await resp_2.json()
-                    final = data_2['link_info']['destination']
-                    return final
+        async with session.get(bplink) as response:
+            r = await response.text()
+            return r
+
+async def shrs(link):
+    r = link.replace("https://shrs.link/", "")
+    async with aiohttp.ClientSession() as session:
+        async with session.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=") as response:
+            data = await response.json()
+            r = await session.get("https://api.shrslink.xyz/get_link?sid="+data['sid'])
+            data = await r.json()
+            r = data['link_info']['destination']
+            return r
+
+async def main(link):
+    if "shareus" in link:
+        bypassed_link = await shareus(link)
+
+    elif "shrs" in link:
+        bypassed_link = await shrs(link)
+
+    else:
+        bypassed_link = "Enter a valid Shareus Link "
+
+    print(bypassed_link)
+
+if __name__ == "__main__":
+    link = input("Enter The Shareus Link :")
+    asyncio.run(main(link))
+
 
     
 async def dropbox(url: str) -> str:
