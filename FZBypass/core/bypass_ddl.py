@@ -235,11 +235,10 @@ async def transcript(url: str, DOMAIN: str, ref: str, sltime) -> str:
                       raise DDLException("Link Extraction Failed")
 
 def main(link):
-    async with aiohttp.ClientSession() as session:
-        r = link.split("=")[-1]
-        bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
-        async with session.get(bplink) as response:
-            return await response.text()
+    r = link.split("=")[-1]
+    bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
+    r = requests.get(bplink).text
+    return r
 
 def shrs(link):
     r = link.replace("https://shrs.link/","")
