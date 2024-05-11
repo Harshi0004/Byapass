@@ -243,31 +243,26 @@ async def shareus(link):
             return r
 
 def shrs(link):
-    r = link.replace("https://shrs.link/", "")
-    with aiohttp.ClientSession() as session:
-        response = session.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=")
-        data = response.json()
-        r = session.get("https://api.shrslink.xyz/get_link?sid="+data['sid'])
-        data = r.json()
-        r = data['link_info']['destination']
-        return r
+    r = link.replace("https://shrs.link/","")
+    r = requests.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=").json()
+    r = requests.get("https://api.shrslink.xyz/get_link?sid="+r['sid']).json()
+    r = (r['link_info']['destination'])
+    return r
 
+def main():
+    link = input("Enter The Shareus Link :")
 
-async def main(link):
     if "shareus" in link:
-        bypassed_link = await shareus(link)
-
+        bypassed_link = shareus(link)
     elif "shrs" in link:
-        bypassed_link = await shrs(link)
-
+        bypassed_link = shrs(link)
     else:
-        bypassed_link = "Enter a valid Shareus Link "
+        bypassed_link = "Enter a valid Shareus Link"
 
     print(bypassed_link)
 
 if __name__ == "__main__":
-    link = input("Enter The Shareus Link :")
-    asyncio.run(main(link))
+    main()
    
 async def dropbox(url: str) -> str:
     return (
