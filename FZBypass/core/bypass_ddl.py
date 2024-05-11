@@ -247,7 +247,6 @@ async def shrs(link):
     async with aiohttp.ClientSession() as session:
         async with session.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=") as response:
             data = await response.json()
-            print("Response from shrslink API:", data) 
             r = await session.get("https://api.shrslink.xyz/get_link?sid="+data['sid'])
             data = await r.json()
             r = data['link_info']['destination']
