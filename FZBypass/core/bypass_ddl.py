@@ -234,34 +234,31 @@ async def transcript(url: str, DOMAIN: str, ref: str, sltime) -> str:
                   except Exception:
                       raise DDLException("Link Extraction Failed")
 
-async def main(link):
-    async with aiohttp.ClientSession() as session:
-        r = link.split("=")[-1]
-        bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
-        async with session.get(bplink) as response:
-            return await response.text()
+def main(link):
+    r = link.split("=")[-1]
+    bplink = "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + r
+    r = requests.get(bplink).text
+    return r
 
-async def shrs(link):
-    async with aiohttp.ClientSession() as session:
-        r = link.replace("https://shrs.link/","")
-        async with session.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=") as response:
-            data = await response.json()
-            sid = data['sid']
-            async with session.get("https://api.shrslink.xyz/get_link?sid="+sid) as response:
-                data = await response.json()
-                return data['link_info']['destination']
+def shrs(link):
+    r = link.replace("https://shrs.link/","")
+    r = requests.get("https://api.shrslink.xyz/v?shortid="+r+"&initial=true&referrer=").json()
+    r = requests.get("https://api.shrslink.xyz/get_link?sid="+r['sid']).json()
+    r = (r['link_info']['destination'])
+    return r
 
 async def shareus(link):
-    if "shareus" in link:
-        bypassed_link = await main(link)
-    elif "shrs" in link:
-        bypassed_link = await shrs(link)
-    else:
-        bypassed_link = "Enter a valid Shareus Link"
+    if "shareus" in link:
+        bypassed_link = await main(link)
+    elif "shrs" in link:
+        bypassed_link = await shrs(link)
+    else:
+        bypassed_link = "Enter a valid Shareus Link"
 
-    print(bypassed_link)
-    
-    return bypassed_link
+    print(bypassed_link)
+    
+    return bypassed_link
+
 
 async def dropbox(url: str) -> str:
     return (
