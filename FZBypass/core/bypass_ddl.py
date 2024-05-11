@@ -248,16 +248,17 @@ def shrs(link):
     return r
 
 async def shareus(link):
-    if "shareus" in link:
-        bypassed_link = await main(link)
-    elif "shrs" in link:
-        bypassed_link = await shrs(link)
-    else:
-        bypassed_link = "Enter a valid Shareus Link"
+    if "shareus" in link:
+        bypassed_link = await main(link)
+    elif "shrs" in link:
+        bypassed_link = await shrs(link)
+    else:
+        bypassed_link = "Enter a valid Shareus Link"
 
-    print(bypassed_link)
-    
-    return bypassed_link
+    print(bypassed_link)
+    
+    return bypassed_link
+
 
 
 async def dropbox(url: str) -> str:
