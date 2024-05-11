@@ -249,9 +249,9 @@ def shrs(link):
 
 async def shareus(link):
     if "shareus" in link:
-        bypassed_link = await main(link)
+        bypassed_link = main(link)
     elif "shrs" in link:
-        bypassed_link = await shrs(link)
+        bypassed_link = shrs(link)
     else:
         bypassed_link = "Enter a valid Shareus Link"
 
